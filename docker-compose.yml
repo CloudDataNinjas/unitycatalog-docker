@@ -1,0 +1,13 @@
+services:
+  unitycatalog:
+    image: "clouddataninjas/unitycatalog:latest"
+    build:
+      context: docker      
+      dockerfile: Dockerfile
+    container_name: unitycatalog
+    ports:
+      - "8081:8081"
+    # volumes:
+    #   - .:/app    
+    #command: ["sleep", "infinity"]
+  

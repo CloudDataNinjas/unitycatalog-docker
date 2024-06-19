@@ -1,0 +1,20 @@
+# Use an appropriate base image
+FROM openjdk:24-slim
+
+# Create and set the working directory
+WORKDIR /app
+
+# # Install git and curl dependencies
+RUN apt-get update && \
+    apt-get install -y curl git 
+    
+# Clone the unitycatalog OSS official repository
+RUN git clone https://github.com/unitycatalog/unitycatalog.git /app
+
+# Build the project
+RUN ./build/sbt -info clean package
+
+# Expose the port that the UC server will run on
+EXPOSE 8081
+
+ENTRYPOINT [ "./bin/start-uc-server"]
