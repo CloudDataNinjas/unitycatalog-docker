@@ -1,0 +1,29 @@
+# Use an official lightweight Python image.
+FROM python:3.11-slim
+
+# Set environment variables to reduce output verbosity.
+ENV PYTHONUNBUFFERED=1
+
+# Install necessary packages for building DuckDB CLI.
+RUN apt-get update && \
+    apt-get install -y wget unzip build-essential cmake && \
+    rm -rf /var/lib/apt/lists/*
+
+# Download and install DuckDB CLI.
+RUN wget https://github.com/duckdb/duckdb/releases/download/v1.0.0/duckdb_cli-linux-amd64.zip && \
+    unzip duckdb_cli-linux-amd64.zip && \
+    mv duckdb /usr/local/bin/ && \
+    rm duckdb_cli-linux-amd64.zip
+
+# Install DuckDB Python package.
+RUN pip install duckdb==1.0.0
+
+# Set the working directory.
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app.
+COPY ./duckdb/ /app/
+
+# Run a simple DuckDB script to verify installation.
+#CMD ["python", "-c", "import duckdb; print(duckdb.query('SELECT 42').fetchall())"]
+ENTRYPOINT [ "sleep","infinity" ]

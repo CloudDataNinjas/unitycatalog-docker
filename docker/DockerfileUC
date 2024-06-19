@@ -15,6 +15,9 @@ RUN git clone https://github.com/unitycatalog/unitycatalog.git /app
 RUN ./build/sbt -info clean package
 
 # Expose the port that the UC server will run on
-EXPOSE 8081
+EXPOSE 8080
+
+# Add /app/bin to the PATH
+ENV PATH="/app/bin:${PATH}"
 
 ENTRYPOINT [ "./bin/start-uc-server"]

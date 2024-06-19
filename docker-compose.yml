@@ -2,12 +2,33 @@ services:
   unitycatalog:
     image: "clouddataninjas/unitycatalog:latest"
     build:
-      context: docker      
-      dockerfile: Dockerfile
+      context: .      
+      dockerfile: docker/DockerfileUC
     container_name: unitycatalog
     ports:
+      - "8080:8080"
+    volumes:
+      # updated cli.log4j2.properties with 
+      #    rootLogger.level = trace  (instead of info)
+      - ./uc/etc/conf/:/app/etc/conf/
+      #- ./uc/etc/data/:/app/etc/data/
+      #- ./uc/etc/db/:/app/etc/db/
+    networks:
+      - uc_network
+    
+  duckdb:
+    image: "clouddataninjas/duckdb:latest"
+    build:
+      context: .      
+      dockerfile: docker/DockerfileDuckDB
+    container_name: duckdb    
+    ports:
       - "8081:8081"
-    # volumes:
-    #   - .:/app    
-    #command: ["sleep", "infinity"]
-  
+    depends_on:
+      - unitycatalog
+    networks:
+      - uc_network
+      
+networks:
+  uc_network:
+    driver: bridge
