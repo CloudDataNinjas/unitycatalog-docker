@@ -8,8 +8,9 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      # updated cli.log4j2.properties with 
-      #    rootLogger.level = trace  (instead of info)
+      # updated 
+      #   - cli.log4j2.properties AND server.log4j2.properties
+      #        rootLogger.level = trace  (instead of info)
       - ./uc/etc/conf/:/app/etc/conf/
       #- ./uc/etc/data/:/app/etc/data/
       #- ./uc/etc/db/:/app/etc/db/
