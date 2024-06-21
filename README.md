@@ -16,9 +16,6 @@ uc catalog create --name my_catalog --comment "test catalog"
 
 # schemas
 ```bash
-# connect
-docker exec -it unitycatalog bash 
-
 # list
 uc schema list --catalog my_catalog
 
@@ -53,3 +50,18 @@ uc table read --full_name unity.default.numbers
 ```bash
 uc table create --full_name my_catalog.my_schema.my_table2 --columns "id INT, name STRING" --storage_location "/app/etc/data/external/my_catalog/tables/"
 ```
+
+
+# duckdb
+```bash
+docker exec -it duckdb bash
+
+#run duckdb
+duckdb
+
+D install uc_catalog from core_nightly;
+log;
+install delta;
+D load uc_catalog;
+D install delta;
+D load delta;

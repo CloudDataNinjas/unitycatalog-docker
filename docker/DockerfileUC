@@ -1,5 +1,9 @@
 # Use an appropriate base image
-FROM openjdk:24-slim
+#FROM openjdk:24-slim  # fails ./build/sbt test -> (cli / Test / test) sbt.TestsFailedException: Tests unsuccessful
+#FROM openjdk:23-slim  # fails ./build/sbt test -> (cli / Test / test) sbt.TestsFailedException: Tests unsuccessful
+#FROM openjdk:23-ea-17-jdk-slim # fails ./build/sbt test -> (cli / Test / test) sbt.TestsFailedException: Tests unsuccessful
+FROM openjdk:17.0.2-slim
+
 
 # Create and set the working directory
 WORKDIR /app
