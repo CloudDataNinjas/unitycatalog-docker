@@ -12,7 +12,7 @@ CREATE SECRET (
 
 ATTACH 'unity' AS unity (TYPE UC_CATALOG);
 
-ATTACH 'my_catalog' AS my_catalog (TYPE UC_CATALOG);
+--ATTACH 'my_catalog' AS my_catalog (TYPE UC_CATALOG);
 
 SHOW ALL TABLES;
-select * from unity.default.test;
+select * from unity.default.numbers;
