@@ -1,0 +1,25 @@
+FROM tabulario/spark-iceberg:latest
+
+LABEL MAINTAINER="Enrique Catalá Bañuls <enrique@clouddataninjas.com>"
+LABEL Project="UnityCatalogOSS"
+LABEL project="unitycatalog" role="jupyter-notebook" sku="cpu"
+
+# # Set environment variables
+# ENV SPARK_HOME=/opt/spark
+# ENV PATH=$SPARK_HOME/bin:$PATH
+
+# Install Jupyter and other dependencies
+USER root
+RUN apt-get update && apt-get install -y python3-pip wget && rm -rf /var/lib/apt/lists/* \
+    && pip3 install notebook
+
+
+
+# Set the working directory
+WORKDIR /home/jovyan/work
+
+# Expose the Jupyter Notebook port
+EXPOSE 8888
+
+# Command to run Jupyter Notebook
+ENTRYPOINT ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]

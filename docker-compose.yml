@@ -10,12 +10,12 @@ services:
       - "8080:8080"
       - "8081:8081"
     volumes:
+      - ./uc/etc/data/:/app/etc/data/
       # updated 
       #   - cli.log4j2.properties AND server.log4j2.properties
       #        rootLogger.level = trace  (instead of info)
-      - ./uc/etc/conf/:/app/etc/conf/
-      - ./uc/etc/data/:/app/etc/data/
-      - ./uc/etc/db/:/app/etc/db/
+      #- ./uc/etc/conf/:/app/etc/conf/      
+      #- ./uc/etc/db/:/app/etc/db/
     networks:
       - uc_network
     
@@ -25,11 +25,25 @@ services:
     build:
       context: .      
       dockerfile: docker/DockerfileDuckDB
-    container_name: duckdb    
-    # ports:
-    #   - "8081:8081"
+    container_name: duckdb        
     volumes:      
       - ./uc/etc/data/:/app/etc/data/      
+    depends_on:
+      - unitycatalog
+    networks:
+      - uc_network
+  
+  jupyter:
+    image: "clouddataninjas/jupyter:latest"
+    hostname: jupyter
+    build:
+      context: .      
+      dockerfile: docker/DockerfileJupyterIceberg
+    container_name: jupyter        
+    volumes:      
+      - ./uc/etc/data/:/app/etc/data/      
+    ports:
+      - "8888:8888"
     depends_on:
       - unitycatalog
     networks:

@@ -4,6 +4,10 @@
 #FROM openjdk:23-ea-17-jdk-slim # fails ./build/sbt test -> (cli / Test / test) sbt.TestsFailedException: Tests unsuccessful
 FROM openjdk:17.0.2-slim
 
+LABEL  "MAINTAINER" "Enrique Catalá Bañuls <enrique@clouddataninjas.com>"
+LABEL "Project" "UnityCatalogOSS"
+LABEL project="unitycatalog" role="unitycatalog" sku="cpu"
+
 
 # Create and set the working directory
 WORKDIR /app
